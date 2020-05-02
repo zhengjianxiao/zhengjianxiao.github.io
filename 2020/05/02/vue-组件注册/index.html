@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020/5 | My Blog</title>
+  <title>vue-组件注册 | My Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="My Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2020/05/index.html">
+  <meta name="description" content="title: vue 组件注册date: 2020-05-02 20:23:40tags: vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-组件注册">
+<meta property="og:url" content="http://yoursite.com/2020/05/02/vue-%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C/index.html">
 <meta property="og:site_name" content="My Blog">
+<meta property="og:description" content="title: vue 组件注册date: 2020-05-02 20:23:40tags: vue">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-02T12:23:40.722Z">
+<meta property="article:modified_time" content="2020-05-02T12:46:08.776Z">
 <meta property="article:author" content="Jian Xiao">
 <meta name="twitter:card" content="summary">
   
@@ -156,129 +160,201 @@
           </div>
           <div id="js-content" class="content-ll">
             
+<article id="post-vue-组件注册" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      vue-组件注册
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/02/vue-%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C/" class="archive-article-date">
+
+        
+        <a href="/2020/05/02/vue-%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C/" class="archive-article-date">
   	<time datetime="2020-05-02T12:23:40.722Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/02/vue-%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C/">vue-组件注册</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title: vue 组件注册<br>date: 2020-05-02 20:23:40<br>tags: vue</p>
+<hr>
+<a id="more"></a>   
+<h1 id="Vue组件注册那些事"><a href="#Vue组件注册那些事" class="headerlink" title="Vue组件注册那些事"></a>Vue组件注册那些事</h1><h2 id="创建Vue实例"><a href="#创建Vue实例" class="headerlink" title="创建Vue实例"></a>创建Vue实例</h2><p>Vue组件只能在Vue的实例中才能使用，在其他html标签下不能使用Vue组件  </p>
+<pre><code>const app = new Vue({
+    el: &apos;#div1&apos;,
+  });  </code></pre><h2 id="创建Vue组件构造器"><a href="#创建Vue组件构造器" class="headerlink" title="创建Vue组件构造器"></a>创建Vue组件构造器</h2><p>通过Vue的extend方法创建一个组件构造器，通过template创建组件模板。 </p>
+<pre><code>const cpn = Vue.extend({
+    template: `
+    &lt;div&gt;
+      &lt;h2&gt;title&lt;/h2&gt;
+      &lt;p&gt;content content content content&lt;/p&gt;
+      &lt;p&gt;content content content content&lt;/p&gt;
+    &lt;/div&gt;
+    `
+  });  </code></pre><h2 id="注册组件"><a href="#注册组件" class="headerlink" title="注册组件"></a>注册组件</h2><ol>
+<li>全局组件，全局组件可以给所有Vue实例使用。<br><code>Vue.component(&#39;myfirstcpn&#39; , cpn)</code></li>
+<li>局部组件，局部组件只能给单个具体的Vue实例使用,通过在某个Vue实例内部注册组件，只能在该实例内使用。  <pre><code>const app = new Vue({
+el: &apos;#div1&apos;,
+components: {
+ mysecondcpn: cpn
+}
+});</code></pre><h3 id="使用组件"><a href="#使用组件" class="headerlink" title="使用组件"></a>使用组件</h3>直接在Vue实例中引入注册组件时的标签就可以使用组件  <pre><code>&lt;div id=&quot;div1&quot;&gt;
+&lt;myfirstcpn&gt;&lt;/myfirstcpn&gt;
+&lt;mysecondcpn&gt;&lt;/mysecondcpn&gt;
+&lt;/div&gt;  </code></pre></li>
+</ol>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/zfb.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data= https://zhengjianxiao.github.io/2020/05/02/vue-%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/02/vue-input%E5%88%87%E6%8D%A2%E4%BF%9D%E7%95%99value%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-05-02T08:06:52.142Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/05/02/vue-input%E5%88%87%E6%8D%A2%E4%BF%9D%E7%95%99value%E7%9A%84%E9%97%AE%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">vue-input切换保留value的问题</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/02/vue-input%E5%88%87%E6%8D%A2%E4%BF%9D%E7%95%99value%E7%9A%84%E9%97%AE%E9%A2%98/">vue-input切换保留value的问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vue组件注册那些事"><span class="toc-number">1.</span> <span class="toc-text">Vue组件注册那些事</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建Vue实例"><span class="toc-number">1.1.</span> <span class="toc-text">创建Vue实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建Vue组件构造器"><span class="toc-number">1.2.</span> <span class="toc-text">创建Vue组件构造器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注册组件"><span class="toc-number">1.3.</span> <span class="toc-text">注册组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用组件"><span class="toc-number">1.3.1.</span> <span class="toc-text">使用组件</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/01/%E5%88%9D%E5%A7%8BMarkdown/" class="archive-article-date">
-  	<time datetime="2020-05-01T13:02:06.409Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-01</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/01/%E5%88%9D%E5%A7%8BMarkdown/">初始Markdown</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/01/%E5%88%A9%E7%94%A8hexo%E5%92%8Cgithub%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
-  	<time datetime="2020-05-01T12:11:27.145Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/01/%E5%88%A9%E7%94%A8hexo%E5%92%8Cgithub%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">利用hexo和github打造个人博客</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -305,8 +381,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
