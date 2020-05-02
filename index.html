@@ -157,6 +157,95 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-vue-input切换保留value的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/02/vue-input%E5%88%87%E6%8D%A2%E4%BF%9D%E7%95%99value%E7%9A%84%E9%97%AE%E9%A2%98/">vue input切换保留value的问题</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/02/vue-input%E5%88%87%E6%8D%A2%E4%BF%9D%E7%95%99value%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2020-05-02T08:06:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>  
+<h1 id="Vue-表单切换保留value的问题"><a href="#Vue-表单切换保留value的问题" class="headerlink" title="Vue 表单切换保留value的问题"></a>Vue 表单切换保留value的问题</h1><p>对于使用v-if v-else 来切换表单的显示内容，我们会遇到这样的一个问题，当我们在input里面输入值得时候，我们没有清空input里面的值，而是直接切换显示的时候，input仍然保留前一次输入的值。<br>代码如下：  </p>
+<pre><code>&lt;div id=&quot;div1&quot;&gt;
+   &lt;span v-if=&quot;isshow&quot;&gt;
+     &lt;label for=&quot;user&quot; &gt;user&lt;/label&gt;
+     &lt;input id=&quot;user&quot; type=&quot;text&quot; placeholder=&quot;user&quot; &gt;
+   &lt;/span&gt;
+   &lt;span v-else&gt;
+     &lt;label for=&quot;user&quot;&gt;email&lt;/label&gt;
+     &lt;input id=&quot;user&quot; type=&quot;text&quot; placeholder=&quot;email&quot; &gt;
+   &lt;/span&gt;
+   &lt;button @click=&quot;toggle&quot;&gt;切换&lt;/button&gt;
+ &lt;/div&gt;  </code></pre><p>input输入abc<br><img src="https://i.loli.net/2020/05/02/EKqxBmJ7fDbHh15.png" alt="2020-05-02_162345.png"><br>当我点击切换的时候切换到email 表单，但是此时input里面的值并没有清空，而是保留了之前输入的abc  </p>
+<p><img src="https://i.loli.net/2020/05/02/VBaXI5fjxAb6hG1.png" alt="2020-05-02_161559.png"><br>此时我查看控制台，发现input并不是之前的input，而确实是email的input。<br><img src="https://i.loli.net/2020/05/02/UkqhnF3M1vraT5b.png" alt="2020-05-02_162634.png"><br>好像是vue内部的虚拟Dom为了提高性能，在切换的时候，对比有无区别，然后发现两者结构一样，就保留之前input的内容。<br>此时，我们只要在input增加一个key，让vue内部识别两者的不同，从而切换的时候就清空input的内容。  </p>
+<pre><code>&lt;input id=&quot;user&quot; type=&quot;text&quot; placeholder=&quot;user&quot; key=&quot;user&quot; &gt;  
+&lt;input id=&quot;user&quot; type=&quot;text&quot; placeholder=&quot;email&quot; key=&quot;email&quot;&gt;  </code></pre><p> <img src="https://i.loli.net/2020/05/02/EKqxBmJ7fDbHh15.png" alt="2020-05-02_162345.png"><br> <img src="https://i.loli.net/2020/05/02/J3lYecbrMoGs6ti.png" alt="2020-05-02_163452.png"><br> 至此，解决input值不清空的问题。  </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/02/vue-input%E5%88%87%E6%8D%A2%E4%BF%9D%E7%95%99value%E7%9A%84%E9%97%AE%E9%A2%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-初始Markdown" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -386,6 +475,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
