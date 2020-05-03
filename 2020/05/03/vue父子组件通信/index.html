@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>es6块级作用域 | My Blog</title>
+  <title>vue父子组件通信 | My Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="title: es6块级作用域date: 2020-05-03 11:29:26tags: es6">
+  <meta name="description" content="title: vue父子组件通信date: 2020-05-03 15:58:04tags: Vue">
 <meta property="og:type" content="article">
-<meta property="og:title" content="es6块级作用域">
-<meta property="og:url" content="http://yoursite.com/2020/05/03/es6%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F/index.html">
+<meta property="og:title" content="vue父子组件通信">
+<meta property="og:url" content="http://yoursite.com/2020/05/03/vue%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/index.html">
 <meta property="og:site_name" content="My Blog">
-<meta property="og:description" content="title: es6块级作用域date: 2020-05-03 11:29:26tags: es6">
+<meta property="og:description" content="title: vue父子组件通信date: 2020-05-03 15:58:04tags: Vue">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-05-03T03:29:26.182Z">
-<meta property="article:modified_time" content="2020-05-03T03:43:22.772Z">
+<meta property="article:published_time" content="2020-05-03T07:58:04.611Z">
+<meta property="article:modified_time" content="2020-05-03T08:18:44.616Z">
 <meta property="article:author" content="Jian Xiao">
 <meta name="twitter:card" content="summary">
   
@@ -160,20 +160,20 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-es6块级作用域" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-vue父子组件通信" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      es6块级作用域
+      vue父子组件通信
     </h1>
   
 
         
-        <a href="/2020/05/03/es6%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="archive-article-date">
-  	<time datetime="2020-05-03T03:29:26.182Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
+        <a href="/2020/05/03/vue%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/" class="archive-article-date">
+  	<time datetime="2020-05-03T07:58:04.611Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
 </a>
         
       </header>
@@ -181,29 +181,39 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<p>title: es6块级作用域<br>date: 2020-05-03 11:29:26<br>tags: es6  </p>
+<p>title: vue父子组件通信<br>date: 2020-05-03 15:58:04<br>tags: Vue  </p>
 <hr>
-<a id="more"></a>  
-<h1 id="es6新增变量探讨"><a href="#es6新增变量探讨" class="headerlink" title="es6新增变量探讨"></a>es6新增变量探讨</h1><h2 id="var-let-const区别"><a href="#var-let-const区别" class="headerlink" title="var let const区别"></a>var let const区别</h2><ol>
-<li>var是定义变量，但是var没有块级作用域  </li>
-<li>let也是定义变量，有块级作用域  </li>
-<li>const是定义常量，定义完不能被修改，但是可以修改内部属性，指定的内存地址不能被修改，有块级作用域  <h2 id="块级作用域引发的问题"><a href="#块级作用域引发的问题" class="headerlink" title="块级作用域引发的问题"></a>块级作用域引发的问题</h2>当我们想要监听ul下的每个li对应的索引，es6之前没有块级作用域，我们只能通过创建一个变量，然后将索引赋值给该变量才能监听，或者通过自执行函数，因为函数本身有块级作用域，所有也可以监听。  <pre><code>window.onload = function() {
-         var lis = document.querySelectorAll(&apos;li&apos;);
-         for (var i = 0; i &lt; lis.length; i++){
-             (function(i) {
-                 lis[i].onclick = function () {
-                     alert(i);
-                 }
-             })(i)
-         }
-     }  </code></pre>但是es6中let和const有块级作用域，就不会有这种问题  <pre><code>window.onload = function() {
-         var lis = document.querySelectorAll(&apos;li&apos;);
-         for (let i = 0; i &lt; lis.length; i++){
-                 lis[i].onclick = function () {
-                     alert(i);
-                 }
-         }
+<a id="more"></a>
+<h1 id="Vue父子组件之间的通信"><a href="#Vue父子组件之间的通信" class="headerlink" title="Vue父子组件之间的通信"></a>Vue父子组件之间的通信</h1><h2 id="子组件获取父组件数据"><a href="#子组件获取父组件数据" class="headerlink" title="子组件获取父组件数据"></a>子组件获取父组件数据</h2><p>子组件不能直接通过访问父组件的data，来获取父组件的数据，我们得通过pros属性来获取父组件数据。  </p>
+<ol>
+<li>创建Vue实例，注册子组件  <pre><code>components: {
+   cpn: {
+     template: &quot;#son&quot;
+   }
+}  </code></pre></li>
+<li>在子组件对象里添加pros属性，其中cname是子组件通过父组件生成的数据，可以指定父组件传过来的数据类型 ， 默认值，还有是否是必须传的属性  <pre><code>props: {
+       cname: {
+         type: Array,
+         default(){
+           return []
+         },
+         required: true
+       }
      }  </code></pre></li>
+<li>父组件调用子组件的时候，在子组件标签里通过v-bind绑定父组件的数据给子组件生成的数据。  <pre><code>&lt;div id=&quot;father&quot;&gt;
+ &lt;h2 &gt;{{mess}}&lt;/h2&gt;
+ &lt;cpn  v-bind:cmess=&quot;mess&quot; v-bind:cname=&quot;name&quot;&gt;&lt;/cpn&gt;
+&lt;/div&gt;  </code></pre></li>
+<li>子组件的模板调用子组件生成的数据  <pre><code>&lt;template id=&quot;son&quot;&gt;
+ &lt;div&gt;
+   &lt;ul&gt;
+     &lt;li v-for=&quot;item in cname&quot;&gt;{{item}}&lt;/li&gt;
+   &lt;/ul&gt;
+ &lt;/div&gt;
+&lt;/template&gt;  </code></pre><h2 id="父组件获取子组件的事件"><a href="#父组件获取子组件的事件" class="headerlink" title="父组件获取子组件的事件"></a>父组件获取子组件的事件</h2>一般都是在子组件的事件发生改变的时候，需要将信息传递给父组件，我们可以给发生的事件绑定一个方法，然后该方法通过$emit方法，自定义一个事件，传递给父组件。注意，是在子组件里的methods属性里添加自定义事件，然后通过父组件调用自定义事件，进行下一步操作。  <pre><code>methods: {
+   btnClick(item){
+     this.$emit(&quot;myclick&quot; , item)
+   },  </code></pre>父组件调用子组件,调用自定义方法<br><code>&lt;cpn @myclick=&quot;sonclick&quot; &gt;&lt;/cpn&gt;</code> </li>
 </ol>
 
       
@@ -289,7 +299,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data= https://zhengjianxiao.github.io/2020/05/03/es6%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data= https://zhengjianxiao.github.io/2020/05/03/vue%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -303,18 +313,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/05/03/vue%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          vue父子组件通信
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/02/vue-%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">vue-组件注册</div>
+    <a href="/2020/05/03/es6%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">es6块级作用域</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -341,7 +342,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#es6新增变量探讨"><span class="toc-number">1.</span> <span class="toc-text">es6新增变量探讨</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#var-let-const区别"><span class="toc-number">1.1.</span> <span class="toc-text">var let const区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#块级作用域引发的问题"><span class="toc-number">1.2.</span> <span class="toc-text">块级作用域引发的问题</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vue父子组件之间的通信"><span class="toc-number">1.</span> <span class="toc-text">Vue父子组件之间的通信</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#子组件获取父组件数据"><span class="toc-number">1.1.</span> <span class="toc-text">子组件获取父组件数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#父组件获取子组件的事件"><span class="toc-number">1.2.</span> <span class="toc-text">父组件获取子组件的事件</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
