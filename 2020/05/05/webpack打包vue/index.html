@@ -6,21 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>webpack-打包图片 | My Blog</title>
+  <title>webpack打包vue | My Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="title: webpack 打包图片date: 2020-05-04 16:46:28tags: webpack">
+  <meta name="description" content="title: webpack打包vuedate: 2020-05-05 12:00:35tags: vue">
 <meta property="og:type" content="article">
-<meta property="og:title" content="webpack-打包图片">
-<meta property="og:url" content="http://yoursite.com/2020/05/04/webpack-%E6%89%93%E5%8C%85%E5%9B%BE%E7%89%87/index.html">
+<meta property="og:title" content="webpack打包vue">
+<meta property="og:url" content="http://yoursite.com/2020/05/05/webpack%E6%89%93%E5%8C%85vue/index.html">
 <meta property="og:site_name" content="My Blog">
-<meta property="og:description" content="title: webpack 打包图片date: 2020-05-04 16:46:28tags: webpack">
+<meta property="og:description" content="title: webpack打包vuedate: 2020-05-05 12:00:35tags: vue">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://i.loli.net/2020/05/04/QmbLyk2DJTPS9Kx.png">
-<meta property="article:published_time" content="2020-05-04T08:46:28.895Z">
-<meta property="article:modified_time" content="2020-05-04T09:02:16.996Z">
+<meta property="article:published_time" content="2020-05-05T04:00:35.569Z">
+<meta property="article:modified_time" content="2020-05-05T04:10:48.310Z">
 <meta property="article:author" content="Jian Xiao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2020/05/04/QmbLyk2DJTPS9Kx.png">
   
     <link rel="alternative" href="/atom.xml" title="My Blog" type="application/atom+xml">
   
@@ -162,20 +160,20 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-webpack-打包图片" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-webpack打包vue" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      webpack-打包图片
+      webpack打包vue
     </h1>
   
 
         
-        <a href="/2020/05/04/webpack-%E6%89%93%E5%8C%85%E5%9B%BE%E7%89%87/" class="archive-article-date">
-  	<time datetime="2020-05-04T08:46:28.895Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
+        <a href="/2020/05/05/webpack%E6%89%93%E5%8C%85vue/" class="archive-article-date">
+  	<time datetime="2020-05-05T04:00:35.569Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-05</time>
 </a>
         
       </header>
@@ -183,40 +181,65 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<p>title: webpack 打包图片<br>date: 2020-05-04 16:46:28<br>tags: webpack </p>
+<p>title: webpack打包vue<br>date: 2020-05-05 12:00:35<br>tags: vue  </p>
 <hr>
 <a id="more"></a>  
-<h1 id="webpack打包图片"><a href="#webpack打包图片" class="headerlink" title="webpack打包图片"></a>webpack打包图片</h1><p>当我们在项目中引用图片的时候，我们也必须把图片当成一个模块，通过webpack打包  </p>
-<ul>
-<li>下载url-loader  </li>
-</ul>
-<p><code>npm install --save-dev url-loader</code>  </p>
-<ul>
-<li><p>在webpack.config.js中配置  </p>
-<pre><code>{
-      test: /\.(png|jpg|gif)$/,
-      use: [
-        {
-          loader: &apos;url-loader&apos;,
-          options: {
-            limit: 8192,
-          }
-        }
-      ]
-    }  </code></pre></li>
-<li><p>如果我们的图片的大小小于limit设置的值，那么图片会以base64格式渲染到页面中<br><img src="https://i.loli.net/2020/05/04/QmbLyk2DJTPS9Kx.png" alt="2020-05-04_170135.png">  </p>
-</li>
-<li><p>如果我们的图片的大小大于limit设置的值,那么我们必须再安装一个file-loader  </p>
-</li>
-</ul>
-<p><code>npm install --save -dev file-loader</code>   </p>
-<p>注意，file-loader不需要在webpack.config.js中配置，但是此时我们依然不能看到图片，因为默认图片会被打包到dist文件夹里，并且以32位hash值命名<br>我们必须再webpack.config.js中配置一个publicPath，才能显示图片  </p>
-<p><code>publicPath: &quot;./dist/&quot;</code>  </p>
-<p>如果我们想以打包前的名字命名，我们必须在webpack.config.js中配置以下代码  </p>
-<pre><code>options: {
-             limit: 8192,
-             name: &apos;img/[name].[hash:8].[ext]&apos;,
-           }  </code></pre>
+<h1 id="webpack打包vue"><a href="#webpack打包vue" class="headerlink" title="webpack打包vue"></a>webpack打包vue</h1><h2 id="组件化开发vue"><a href="#组件化开发vue" class="headerlink" title="组件化开发vue"></a>组件化开发vue</h2><p>没有组件化的vue是这样的，数据模板都在vue实例里，模块不清晰  </p>
+<pre><code>const App = {
+  template:`&lt;h1&gt;{{message}}&lt;/h1&gt;`,
+  data(){
+    return {
+      message : &quot;hello&quot;
+    }
+  }
+}
+new Vue({
+  el : &quot;#div1&quot; ,
+  template:`&lt;App/&gt;`,
+  components: {
+    App
+  }
+})  </code></pre><h2 id="使用组件化开发vue"><a href="#使用组件化开发vue" class="headerlink" title="使用组件化开发vue"></a>使用组件化开发vue</h2><h3 id="创建vue实例"><a href="#创建vue实例" class="headerlink" title="创建vue实例"></a>创建vue实例</h3><pre><code>new Vue({
+  el : &quot;#div1&quot;,
+  template: `&lt;App/&gt;`,
+  components: {
+    App
+  }
+})  </code></pre><h3 id="创建vue文件"><a href="#创建vue文件" class="headerlink" title="创建vue文件"></a>创建vue文件</h3><p>包含template模板 ，script脚本 ，style样式，实现组件化独立开发。    </p>
+<pre><code>&lt;template&gt;
+&lt;div&gt;
+  &lt;h1 class=&quot;title&quot;&gt;{{message}}&lt;/h1&gt;
+  &lt;Child&gt;&lt;/Child&gt;
+&lt;/div&gt;
+&lt;/template&gt;
+
+
+&lt;script&gt;
+import Child from &quot;./Child.Vue&quot;
+  export default {
+    name: &quot;App&quot;,
+    components: {
+      Child
+    },
+    data() {
+      return {
+        message : &quot;hello&quot;
+      }
+    }
+  }
+&lt;/script&gt;
+
+
+&lt;style scoped&gt;
+  .title {
+    color: red;
+  }
+&lt;/style&gt;  </code></pre><h3 id="导入vue组件"><a href="#导入vue组件" class="headerlink" title="导入vue组件"></a>导入vue组件</h3><p><code>import App from &quot;./Vue/App.Vue&quot;</code>   </p>
+<h3 id="下载vue-loader-，-vue-template-compail，只有下载vue-loader-vue-template-compail才能打包vue"><a href="#下载vue-loader-，-vue-template-compail，只有下载vue-loader-vue-template-compail才能打包vue" class="headerlink" title="下载vue-loader ， vue-template-compail，只有下载vue-loader , vue-template-compail才能打包vue"></a>下载vue-loader ， vue-template-compail，只有下载vue-loader , vue-template-compail才能打包vue</h3><p><code>npm install vue-loader vue-template-compail</code>  </p>
+<h3 id="webpack-config-js配置vue-loader"><a href="#webpack-config-js配置vue-loader" class="headerlink" title="webpack.config.js配置vue-loader"></a>webpack.config.js配置vue-loader</h3><pre><code>{
+       test: /\.Vue$/,
+       use: [&quot;vue-loader&quot;]
+     }</code></pre>
       
 
       
@@ -300,7 +323,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data= https://zhengjianxiao.github.io/2020/05/04/webpack-%E6%89%93%E5%8C%85%E5%9B%BE%E7%89%87/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data= https://zhengjianxiao.github.io/2020/05/05/webpack%E6%89%93%E5%8C%85vue/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -314,18 +337,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/05/05/webpack%E6%89%93%E5%8C%85vue/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          webpack打包vue
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/04/webpack%E9%85%8D%E7%BD%AE%E6%89%93%E5%8C%85/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">webpack配置打包</div>
+    <a href="/2020/05/04/webpack-%E6%89%93%E5%8C%85%E5%9B%BE%E7%89%87/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">webpack-打包图片</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -352,7 +366,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包图片"><span class="toc-number">1.</span> <span class="toc-text">webpack打包图片</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包vue"><span class="toc-number">1.</span> <span class="toc-text">webpack打包vue</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#组件化开发vue"><span class="toc-number">1.1.</span> <span class="toc-text">组件化开发vue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用组件化开发vue"><span class="toc-number">1.2.</span> <span class="toc-text">使用组件化开发vue</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建vue实例"><span class="toc-number">1.2.1.</span> <span class="toc-text">创建vue实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建vue文件"><span class="toc-number">1.2.2.</span> <span class="toc-text">创建vue文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#导入vue组件"><span class="toc-number">1.2.3.</span> <span class="toc-text">导入vue组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下载vue-loader-，-vue-template-compail，只有下载vue-loader-vue-template-compail才能打包vue"><span class="toc-number">1.2.4.</span> <span class="toc-text">下载vue-loader ， vue-template-compail，只有下载vue-loader , vue-template-compail才能打包vue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#webpack-config-js配置vue-loader"><span class="toc-number">1.2.5.</span> <span class="toc-text">webpack.config.js配置vue-loader</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
