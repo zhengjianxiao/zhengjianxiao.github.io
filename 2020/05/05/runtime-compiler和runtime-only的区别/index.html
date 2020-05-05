@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020 | My Blog</title>
+  <title>runtime-compiler和runtime-only的区别 | My Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="My Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2020/index.html">
+  <meta name="description" content="title: runtime compiler和runtime only的区别date: 2020-05-05 14:27:02tags: vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="runtime-compiler和runtime-only的区别">
+<meta property="og:url" content="http://yoursite.com/2020/05/05/runtime-compiler%E5%92%8Cruntime-only%E7%9A%84%E5%8C%BA%E5%88%AB/index.html">
 <meta property="og:site_name" content="My Blog">
+<meta property="og:description" content="title: runtime compiler和runtime only的区别date: 2020-05-05 14:27:02tags: vue">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-05T06:27:02.950Z">
+<meta property="article:modified_time" content="2020-05-05T06:50:29.163Z">
 <meta property="article:author" content="Jian Xiao">
 <meta name="twitter:card" content="summary">
   
@@ -156,294 +160,220 @@
           </div>
           <div id="js-content" class="content-ll">
             
+<article id="post-runtime-compiler和runtime-only的区别" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      runtime-compiler和runtime-only的区别
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/05/runtime-compiler%E5%92%8Cruntime-only%E7%9A%84%E5%8C%BA%E5%88%AB/" class="archive-article-date">
+
+        
+        <a href="/2020/05/05/runtime-compiler%E5%92%8Cruntime-only%E7%9A%84%E5%8C%BA%E5%88%AB/" class="archive-article-date">
   	<time datetime="2020-05-05T06:27:02.950Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-05</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/05/runtime-compiler%E5%92%8Cruntime-only%E7%9A%84%E5%8C%BA%E5%88%AB/">runtime-compiler和runtime-only的区别</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title: runtime compiler和runtime only的区别<br>date: 2020-05-05 14:27:02<br>tags: vue </p>
+<hr>
+<a id="more"></a>  
+<h1 id="runtime-compiler和runtime-only的区别"><a href="#runtime-compiler和runtime-only的区别" class="headerlink" title="runtime compiler和runtime only的区别"></a>runtime compiler和runtime only的区别</h1><p>在我们用vue/cli创建项目的时候会遇到一个选项，让我们选择runtime compiler还是runtime only，他们究竟有什么区别  </p>
+<pre><code>&gt; Runtime + Compiler: recommended for most users
+  Runtime-only: about 6KB lighter min+gzip, but templates (or any Vue-specific HTML) are ONLY allowed in .vue files - render functions
+ are required elsewhere  </code></pre><h2 id="runtime-compiler创建的项目"><a href="#runtime-compiler创建的项目" class="headerlink" title="runtime compiler创建的项目"></a>runtime compiler创建的项目</h2><p> 我们打开runtime compiler创建的项目的main.js  </p>
+<pre><code> new Vue({
+  el: &apos;#app&apos;,
+  components: { App },
+  template: &apos;&lt;App/&gt;&apos;
+})  </code></pre><p>发现创建的vue实例，里有template，还有components ,是直接将组件注册到vue实例里，然后通过template进行调用。  </p>
+<h3 id="runtime-compiler执行过程"><a href="#runtime-compiler执行过程" class="headerlink" title="runtime compiler执行过程"></a>runtime compiler执行过程</h3><ul>
+<li>先将组件注册到实例里  </li>
+<li>通过template调用组件  </li>
+<li>将template解析成ast树  </li>
+<li>将ast装换成render函数  </li>
+<li>将render渲染成visual dom </li>
+<li>将visual dom 渲染成真实dom  <h2 id="runtime-compiler创建的项目-1"><a href="#runtime-compiler创建的项目-1" class="headerlink" title="runtime compiler创建的项目"></a>runtime compiler创建的项目</h2></li>
+</ul>
+<pre><code>new Vue({
+  el: &apos;#app&apos;,
+  render: h =&gt; h(App)
+})</code></pre><p>发现创建的vue实例，没有template，有一个render函数,说明直接跳过template装换到render的过程，代码量更少，性能更高    </p>
+<h3 id="runtime-only执行过程"><a href="#runtime-only执行过程" class="headerlink" title="runtime only执行过程"></a>runtime only执行过程</h3><ul>
+<li>将render渲染成visual dom </li>
+<li>将visual dom 渲染成真实dom  </li>
+</ul>
+<h2 id="render函数的createlement函数"><a href="#render函数的createlement函数" class="headerlink" title="render函数的createlement函数"></a>render函数的createlement函数</h2><h3 id="普通用法"><a href="#普通用法" class="headerlink" title="普通用法"></a>普通用法</h3><p>我们可以在render函数中传入一个回调函数createlement ,该函数可以传三个参数  </p>
+<ul>
+<li>第一个是标签名  </li>
+<li>第二个是标签的属性  </li>
+<li>第三是标签的内容<br>当我们指定完这些参数，就能将创建的标签替换之前挂载的#app,渲染到浏览器上  </li>
+</ul>
+<pre><code>new Vue({
+  el: &apos;#app&apos;,
+  render: function (createlement){
+    return createelement(&apos;div&apos;, {class:&quot;div1&quot;},[&quot;hello word&quot;])
+  }
+})  </code></pre><h3 id="组件用法"><a href="#组件用法" class="headerlink" title="组件用法"></a>组件用法</h3><p>我们也可以在createelement函数传入一个组件  </p>
+<pre><code>import App from &apos;./App&apos;  
+new Vue({
+  el: &apos;#app&apos;,
+  render: function (createlement){
+    return createelement(App)
+  }
+})  </code></pre><p>当我们传入组件的时候，就和runtime only创建的一样了。  </p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/zfb.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data= https://zhengjianxiao.github.io/2020/05/05/runtime-compiler%E5%92%8Cruntime-only%E7%9A%84%E5%8C%BA%E5%88%AB/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/05/webpack%E6%89%93%E5%8C%85vue/" class="archive-article-date">
-  	<time datetime="2020-05-05T04:00:35.569Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-05</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/05/05/webpack%E6%89%93%E5%8C%85vue/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">webpack打包vue</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/05/webpack%E6%89%93%E5%8C%85vue/">webpack打包vue</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#runtime-compiler和runtime-only的区别"><span class="toc-number">1.</span> <span class="toc-text">runtime compiler和runtime only的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#runtime-compiler创建的项目"><span class="toc-number">1.1.</span> <span class="toc-text">runtime compiler创建的项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#runtime-compiler执行过程"><span class="toc-number">1.1.1.</span> <span class="toc-text">runtime compiler执行过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#runtime-compiler创建的项目-1"><span class="toc-number">1.2.</span> <span class="toc-text">runtime compiler创建的项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#runtime-only执行过程"><span class="toc-number">1.2.1.</span> <span class="toc-text">runtime only执行过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#render函数的createlement函数"><span class="toc-number">1.3.</span> <span class="toc-text">render函数的createlement函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#普通用法"><span class="toc-number">1.3.1.</span> <span class="toc-text">普通用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组件用法"><span class="toc-number">1.3.2.</span> <span class="toc-text">组件用法</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/04/webpack-%E6%89%93%E5%8C%85%E5%9B%BE%E7%89%87/" class="archive-article-date">
-  	<time datetime="2020-05-04T08:46:28.895Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/04/webpack-%E6%89%93%E5%8C%85%E5%9B%BE%E7%89%87/">webpack-打包图片</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/04/webpack%E9%85%8D%E7%BD%AE%E6%89%93%E5%8C%85/" class="archive-article-date">
-  	<time datetime="2020-05-04T07:19:18.368Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/04/webpack%E9%85%8D%E7%BD%AE%E6%89%93%E5%8C%85/">webpack配置打包</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/03/es6%E6%A8%A1%E5%9D%97%E5%8C%96%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA/" class="archive-article-date">
-  	<time datetime="2020-05-03T13:10:14.201Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/03/es6%E6%A8%A1%E5%9D%97%E5%8C%96%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA/">es6模块化导入和导出</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/03/vue%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/" class="archive-article-date">
-  	<time datetime="2020-05-03T07:58:04.611Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/03/vue%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/">vue父子组件通信</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/03/es6%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="archive-article-date">
-  	<time datetime="2020-05-03T03:29:26.182Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/03/es6%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F/">es6块级作用域</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/02/vue-%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C/" class="archive-article-date">
-  	<time datetime="2020-05-02T12:23:40.722Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/02/vue-%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C/">vue-组件注册</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/02/vue-input%E5%88%87%E6%8D%A2%E4%BF%9D%E7%95%99value%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-05-02T08:06:52.142Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/02/vue-input%E5%88%87%E6%8D%A2%E4%BF%9D%E7%95%99value%E7%9A%84%E9%97%AE%E9%A2%98/">vue-input切换保留value的问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/01/%E5%88%9D%E5%A7%8BMarkdown/" class="archive-article-date">
-  	<time datetime="2020-05-01T13:02:06.409Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/01/%E5%88%9D%E5%A7%8BMarkdown/">初始Markdown</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2020/page/2/">2</a><a class="extend next" rel="next" href="/archives/2020/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -471,8 +401,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
