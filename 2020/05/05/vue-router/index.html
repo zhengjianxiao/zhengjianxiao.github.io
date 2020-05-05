@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | My Blog</title>
+  <title>vue-router | My Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="My Blog">
-<meta property="og:url" content="http://yoursite.com/archives/page/2/index.html">
+  <meta name="description" content="title: vue routerdate: 2020-05-05 21:51:56tags:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-router">
+<meta property="og:url" content="http://yoursite.com/2020/05/05/vue-router/index.html">
 <meta property="og:site_name" content="My Blog">
+<meta property="og:description" content="title: vue routerdate: 2020-05-05 21:51:56tags:">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-05T13:51:56.825Z">
+<meta property="article:modified_time" content="2020-05-05T14:05:25.138Z">
 <meta property="article:author" content="Jian Xiao">
 <meta name="twitter:card" content="summary">
   
@@ -156,78 +160,223 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
+<article id="post-vue-router" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/01/%E5%88%9D%E5%A7%8BMarkdown/" class="archive-article-date">
-  	<time datetime="2020-05-01T13:02:06.409Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-01</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/01/%E5%88%9D%E5%A7%8BMarkdown/">初始Markdown</a>
+    <h1 class="article-title" itemprop="name">
+      vue-router
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/01/%E5%88%A9%E7%94%A8hexo%E5%92%8Cgithub%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
-  	<time datetime="2020-05-01T12:11:27.145Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-01</time>
+        
+        <a href="/2020/05/05/vue-router/" class="archive-article-date">
+  	<time datetime="2020-05-05T13:51:56.825Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-05</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/01/%E5%88%A9%E7%94%A8hexo%E5%92%8Cgithub%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">利用hexo和github打造个人博客</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title: vue router<br>date: 2020-05-05 21:51:56<br>tags:</p>
+<hr>
+<a id="more"></a>  
+<h1 id="vue-router基本使用"><a href="#vue-router基本使用" class="headerlink" title="vue router基本使用"></a>vue router基本使用</h1><p>我们利用脚手架创建的项目中，如果选择了vue-router，那么会有一个router文件夹，里面有一个index.js,用来管理路由映射 </p>
+<h2 id="如何使用vue-router？"><a href="#如何使用vue-router？" class="headerlink" title="如何使用vue-router？"></a>如何使用vue-router？</h2><ul>
+<li>创建组件<br>这里创建组件用来测试  </li>
+</ul>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;h2&gt;about&lt;/h2&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
-        <div class="article-info info-on-right">
-          
-          
+&lt;script&gt;
+  export default {
+    name: &quot;about&quot;
 
+  }
+&lt;/script&gt;
+
+&lt;style scope&gt;&lt;/style&gt;  </code></pre><ul>
+<li>在index.js中导入组件<br><code>import about from &#39;../components/about&#39;</code>  </li>
+</ul>
+<p>*在index.js中配置路由，还有默认显示路由    </p>
+<pre><code>const routes = [{
+  path: &apos;/&apos;, 
+  redirect: &apos;/home&apos;
+},
+{
+  path: &apos;/home&apos;, 
+  component: home,
+}</code></pre><ul>
+<li>在App.js的template引用路由,通过router-link标签挂载路由，通过router-view标签显示内容    </li>
+</ul>
+<pre><code>&lt;router-link to=&quot;/about&quot; replace&gt;about&lt;/router-link&gt; 
+&lt;router-view&gt;&lt;/router-view&gt; </code></pre><ul>
+<li>也可以通过基本标签注册事件来引用路由  </li>
+</ul>
+<pre><code>&lt;button @click=&quot;homeclick&quot;&gt;home&lt;/button&gt;
+&lt;button @click=&quot;testclick&quot;&gt;test&lt;/button&gt;  
+
+methods: {
+   homeclick(){
+     // this.$router.push(&quot;/home&quot;)
+     this.$router.replace(&quot;/home&quot;)
+   },
+   aboutclick(){
+     // this.$router.push(&quot;/about&quot;)
+     this.$router.replace(&quot;/about&quot;)
+   }
+ }</code></pre>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/zfb.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data= https://zhengjianxiao.github.io/2020/05/05/vue-router/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/05/05/runtime-compiler%E5%92%8Cruntime-only%E7%9A%84%E5%8C%BA%E5%88%AB/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">runtime-compiler和runtime-only的区别</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vue-router基本使用"><span class="toc-number">1.</span> <span class="toc-text">vue router基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#如何使用vue-router？"><span class="toc-number">1.1.</span> <span class="toc-text">如何使用vue-router？</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/">&amp;laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
   
 
 
@@ -255,8 +404,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
