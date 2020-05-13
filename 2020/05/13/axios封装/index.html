@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | My Blog</title>
+  <title>axios封装 | My Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="My Blog">
-<meta property="og:url" content="http://yoursite.com/archives/page/2/index.html">
+  <meta name="description" content="title: axios封装date: 2020-05-13 13:25:44tags: axios">
+<meta property="og:type" content="article">
+<meta property="og:title" content="axios封装">
+<meta property="og:url" content="http://yoursite.com/2020/05/13/axios%E5%B0%81%E8%A3%85/index.html">
 <meta property="og:site_name" content="My Blog">
+<meta property="og:description" content="title: axios封装date: 2020-05-13 13:25:44tags: axios">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-13T05:25:44.504Z">
+<meta property="article:modified_time" content="2020-05-13T05:38:30.608Z">
 <meta property="article:author" content="Jian Xiao">
 <meta name="twitter:card" content="summary">
   
@@ -156,186 +160,257 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
+<article id="post-axios封装" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      axios封装
+    </h1>
+  
+
+        
+        <a href="/2020/05/13/axios%E5%B0%81%E8%A3%85/" class="archive-article-date">
+  	<time datetime="2020-05-13T05:25:44.504Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-13</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title: axios封装<br>date: 2020-05-13 13:25:44<br>tags: axios</p>
+<hr>
+<a id="more"></a>   
+
+<h1 id="axios封装"><a href="#axios封装" class="headerlink" title="axios封装"></a>axios封装</h1><h2 id="回调函数封装"><a href="#回调函数封装" class="headerlink" title="回调函数封装"></a>回调函数封装</h2><ul>
+<li><p>导入axios<br><code>import axios from &#39;axios&#39;</code>  </p>
+</li>
+<li><p>导出封装的函数  </p>
+</li>
+</ul>
+<p><code>export function inter1</code>  </p>
+<ul>
+<li>创建axios实例  </li>
+</ul>
+<pre><code>const instance = axios.create({
+    baseURL: &apos;http://123.207.32.32:8000&apos;,
+    timeout: 5000
+  })</code></pre><ul>
+<li>调用实例  </li>
+</ul>
+<pre><code>instance(config).then((res) =&gt; {
+    success(res);
+  }).catch((err) =&gt; {
+    failure(err);
+  })</code></pre><ul>
+<li>完整封装如下  </li>
+</ul>
+<pre><code>import axios from &apos;axios&apos;
+//回调函数  
+export function inter1 (config , success , failure) {
+  const instance = axios.create({
+    baseURL: &apos;http://123.207.32.32:8000&apos;,
+    timeout: 5000
+  })
+
+  instance(config).then((res) =&gt; {
+    success(res);
+  }).catch((err) =&gt; {
+    failure(err);
+  })
+}</code></pre><ul>
+<li>调用方式如下  </li>
+</ul>
+<pre><code>import {inter1} from &quot;./network/index.js&quot;
+inter1({
+  url : &quot;home/multidata&quot;
+},
+success =&gt; console.log(success),
+error =&gt; console.log(error));</code></pre><h2 id="promise封装"><a href="#promise封装" class="headerlink" title="promise封装"></a>promise封装</h2><ul>
+<li>通过返回一个promise进行封装，不用传回调函数  </li>
+</ul>
+<pre><code>export function inter1 (config) {
+  return new Promise((resolve, reject) =&gt; {
+    const instance = axios.create({
+      baseURL: &apos;http://123.207.32.32:8000&apos;,
+      timeout: 5000
+    })
+
+    instance(config).then((res) =&gt; {
+      resolve(res)
+    }).catch((err) =&gt; {
+      reject(err)
+    })
+  })
+
+}</code></pre><ul>
+<li>调用如下  </li>
+</ul>
+<pre><code>inter1({
+  url : &quot;home/multidata&quot;
+}).then(res =&gt; console.log(res))
+.catch(err =&gt; console.log(err))</code></pre><h2 id="直接return调用的实例"><a href="#直接return调用的实例" class="headerlink" title="直接return调用的实例"></a>直接return调用的实例</h2><pre><code>//直接return instance就是返回一个promise
+export function inter1 (config) {
+
+    const instance = axios.create({
+      baseURL: &apos;http://123.207.32.32:8000&apos;,
+      timeout: 5000
+    })
+
+   return instance(config)
+}</code></pre><p>调用方式如下  </p>
+<pre><code>inter1({
+  url : &quot;home/multidata&quot;
+}).then(res =&gt; console.log(res))
+.catch(err =&gt; console.log(err))</code></pre>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/zfb.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/03/vue%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/" class="archive-article-date">
-  	<time datetime="2020-05-03T07:58:04.611Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/03/vue%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/">vue父子组件通信</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data= https://zhengjianxiao.github.io/2020/05/13/axios%E5%B0%81%E8%A3%85/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/03/es6%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="archive-article-date">
-  	<time datetime="2020-05-03T03:29:26.182Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/05/13/axios%E5%AE%9E%E4%BE%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">axios实例</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/03/es6%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F/">es6块级作用域</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#axios封装"><span class="toc-number">1.</span> <span class="toc-text">axios封装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#回调函数封装"><span class="toc-number">1.1.</span> <span class="toc-text">回调函数封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#promise封装"><span class="toc-number">1.2.</span> <span class="toc-text">promise封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直接return调用的实例"><span class="toc-number">1.3.</span> <span class="toc-text">直接return调用的实例</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/02/vue-%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C/" class="archive-article-date">
-  	<time datetime="2020-05-02T12:23:40.722Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/02/vue-%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C/">vue-组件注册</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/02/vue-input%E5%88%87%E6%8D%A2%E4%BF%9D%E7%95%99value%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-05-02T08:06:52.142Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/02/vue-input%E5%88%87%E6%8D%A2%E4%BF%9D%E7%95%99value%E7%9A%84%E9%97%AE%E9%A2%98/">vue-input切换保留value的问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/01/%E5%88%9D%E5%A7%8BMarkdown/" class="archive-article-date">
-  	<time datetime="2020-05-01T13:02:06.409Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/01/%E5%88%9D%E5%A7%8BMarkdown/">初始Markdown</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/01/%E5%88%A9%E7%94%A8hexo%E5%92%8Cgithub%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
-  	<time datetime="2020-05-01T12:11:27.145Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/01/%E5%88%A9%E7%94%A8hexo%E5%92%8Cgithub%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">利用hexo和github打造个人博客</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/">&amp;laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
-    </nav>
   
 
 
@@ -363,8 +438,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
