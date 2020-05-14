@@ -6,15 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020/5 | My Blog</title>
+  <title>Asp-Net-Core数据库访问失败 | My Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="My Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2020/05/index.html">
+  <meta name="description" content="title: Asp.Net Core数据库访问失败date: 2020-05-14 21:14:34tags: Asp.Net Core">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Asp-Net-Core数据库访问失败">
+<meta property="og:url" content="http://yoursite.com/2020/05/14/Asp-Net-Core%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BF%E9%97%AE%E5%A4%B1%E8%B4%A5/index.html">
 <meta property="og:site_name" content="My Blog">
+<meta property="og:description" content="title: Asp.Net Core数据库访问失败date: 2020-05-14 21:14:34tags: Asp.Net Core">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/05/14/VpKPev7sXmh5UWN.png">
+<meta property="og:image" content="https://i.loli.net/2020/05/14/f6VP294N5q38kIt.png">
+<meta property="og:image" content="https://i.loli.net/2020/05/14/WeKyM2JYrfcXjBb.png">
+<meta property="article:published_time" content="2020-05-14T13:14:34.125Z">
+<meta property="article:modified_time" content="2020-05-14T13:40:05.873Z">
 <meta property="article:author" content="Jian Xiao">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/14/VpKPev7sXmh5UWN.png">
   
     <link rel="alternative" href="/atom.xml" title="My Blog" type="application/atom+xml">
   
@@ -156,294 +164,190 @@
           </div>
           <div id="js-content" class="content-ll">
             
+<article id="post-Asp-Net-Core数据库访问失败" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Asp-Net-Core数据库访问失败
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/14/Asp-Net-Core%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BF%E9%97%AE%E5%A4%B1%E8%B4%A5/" class="archive-article-date">
+
+        
+        <a href="/2020/05/14/Asp-Net-Core%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BF%E9%97%AE%E5%A4%B1%E8%B4%A5/" class="archive-article-date">
   	<time datetime="2020-05-14T13:14:34.125Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-14</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/14/Asp-Net-Core%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BF%E9%97%AE%E5%A4%B1%E8%B4%A5/">Asp-Net-Core数据库访问失败</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title: Asp.Net Core数据库访问失败<br>date: 2020-05-14 21:14:34<br>tags: Asp.Net Core  </p>
+<hr>
+<a id="more"></a>  
+<h1 id="Asp-Net-Core数据库访问失败的解决办法"><a href="#Asp-Net-Core数据库访问失败的解决办法" class="headerlink" title="Asp.Net Core数据库访问失败的解决办法"></a>Asp.Net Core数据库访问失败的解决办法</h1><h2 id="错误详情"><a href="#错误详情" class="headerlink" title="错误详情"></a>错误详情</h2><p>当我们的Asp.Net Core项目运行时，交互数据库的时候，产生错误，错误详情如下<br><img src="https://i.loli.net/2020/05/14/VpKPev7sXmh5UWN.png" alt="2020-05-14_212152.png">   </p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>我们可以删除之前的数据库，然后在Nuget控制台通过add-migration来进行数据库的迁移，通过update-database更新数据库，重新创建数据库  </p>
+<pre><code>add-migration reset
 
-        <div class="article-info info-on-right">
-          
-          
+关系。单击包源(源) URL 可确定任何依赖关系。
 
+程序包管理器控制台主机版本 5.4.0.6292
+
+键入 &quot;get-help NuGet&quot; 可查看所有可用的 NuGet 命令。
+
+PM&gt; update-database </code></pre><h2 id="重新测试"><a href="#重新测试" class="headerlink" title="重新测试"></a>重新测试</h2><ul>
+<li>注册<br><img src="https://i.loli.net/2020/05/14/f6VP294N5q38kIt.png" alt="2020-05-14_213726.png">  </li>
+<li>登入系统<br><img src="https://i.loli.net/2020/05/14/WeKyM2JYrfcXjBb.png" alt="2020-05-14_213803.png">  </li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/zfb.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data= https://zhengjianxiao.github.io/2020/05/14/Asp-Net-Core%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BF%E9%97%AE%E5%A4%B1%E8%B4%A5/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/13/axios%E5%B0%81%E8%A3%85/" class="archive-article-date">
-  	<time datetime="2020-05-13T05:25:44.504Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-13</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/05/13/axios%E5%B0%81%E8%A3%85/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">axios封装</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/13/axios%E5%B0%81%E8%A3%85/">axios封装</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Asp-Net-Core数据库访问失败的解决办法"><span class="toc-number">1.</span> <span class="toc-text">Asp.Net Core数据库访问失败的解决办法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#错误详情"><span class="toc-number">1.1.</span> <span class="toc-text">错误详情</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决办法"><span class="toc-number">1.2.</span> <span class="toc-text">解决办法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重新测试"><span class="toc-number">1.3.</span> <span class="toc-text">重新测试</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/13/axios%E5%AE%9E%E4%BE%8B/" class="archive-article-date">
-  	<time datetime="2020-05-13T03:55:31.437Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-13</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/13/axios%E5%AE%9E%E4%BE%8B/">axios实例</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/12/Promise%E7%9A%84%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8/" class="archive-article-date">
-  	<time datetime="2020-05-12T04:49:04.867Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/12/Promise%E7%9A%84%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8/">Promise的链式调用</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/06/vue-%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92/" class="archive-article-date">
-  	<time datetime="2020-05-06T13:28:03.919Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/06/vue-%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92/">vue-动态路由参数传递</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/05/vue-router/" class="archive-article-date">
-  	<time datetime="2020-05-05T13:51:56.825Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/05/vue-router/">vue-router</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/05/runtime-compiler%E5%92%8Cruntime-only%E7%9A%84%E5%8C%BA%E5%88%AB/" class="archive-article-date">
-  	<time datetime="2020-05-05T06:27:02.950Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/05/runtime-compiler%E5%92%8Cruntime-only%E7%9A%84%E5%8C%BA%E5%88%AB/">runtime-compiler和runtime-only的区别</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/05/webpack%E6%89%93%E5%8C%85vue/" class="archive-article-date">
-  	<time datetime="2020-05-05T04:00:35.569Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/05/webpack%E6%89%93%E5%8C%85vue/">webpack打包vue</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/04/webpack-%E6%89%93%E5%8C%85%E5%9B%BE%E7%89%87/" class="archive-article-date">
-  	<time datetime="2020-05-04T08:46:28.895Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/04/webpack-%E6%89%93%E5%8C%85%E5%9B%BE%E7%89%87/">webpack-打包图片</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/04/webpack%E9%85%8D%E7%BD%AE%E6%89%93%E5%8C%85/" class="archive-article-date">
-  	<time datetime="2020-05-04T07:19:18.368Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/04/webpack%E9%85%8D%E7%BD%AE%E6%89%93%E5%8C%85/">webpack配置打包</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2020/05/page/2/">2</a><a class="extend next" rel="next" href="/archives/2020/05/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -471,8 +375,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
