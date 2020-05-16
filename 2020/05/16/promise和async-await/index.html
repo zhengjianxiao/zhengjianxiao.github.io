@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>My Blog</title>
+  <title>promise和async-await | My Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="My Blog">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+  <meta name="description" content="title: promise和async awaitdate: 2020-05-16 11:30:12tags: es6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="promise和async-await">
+<meta property="og:url" content="http://yoursite.com/2020/05/16/promise%E5%92%8Casync-await/index.html">
 <meta property="og:site_name" content="My Blog">
+<meta property="og:description" content="title: promise和async awaitdate: 2020-05-16 11:30:12tags: es6">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-16T03:30:12.606Z">
+<meta property="article:modified_time" content="2020-05-16T03:37:33.303Z">
 <meta property="article:author" content="Jian Xiao">
 <meta name="twitter:card" content="summary">
   
@@ -156,21 +160,20 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-    <article id="post-webpack配置打包" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+<article id="post-promise和async-await" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/04/webpack%E9%85%8D%E7%BD%AE%E6%89%93%E5%8C%85/">webpack配置打包</a>
+    <h1 class="article-title" itemprop="name">
+      promise和async-await
     </h1>
   
 
         
-        <a href="/2020/05/04/webpack%E9%85%8D%E7%BD%AE%E6%89%93%E5%8C%85/" class="archive-article-date">
-  	<time datetime="2020-05-04T07:19:18.368Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
+        <a href="/2020/05/16/promise%E5%92%8Casync-await/" class="archive-article-date">
+  	<time datetime="2020-05-16T03:30:12.606Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-16</time>
 </a>
         
       </header>
@@ -178,13 +181,112 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<p>title: webpack配置打包<br>date: 2020-05-04 15:19:18<br>tags: webpack  </p>
+<p>title: promise和async await<br>date: 2020-05-16 11:30:12<br>tags: es6  </p>
 <hr>
-        
-          <a class="article-more-a" href="/2020/05/04/webpack%E9%85%8D%E7%BD%AE%E6%89%93%E5%8C%85/#more">more >></a>
-        
+<a id="more"></a>  
+<h1 id="promise和async-await的区别"><a href="#promise和async-await的区别" class="headerlink" title="promise和async await的区别"></a>promise和async await的区别</h1><p>promise和async await都是做异步处理的, 使异步转为同步，解决了回调函数一直回调嵌套的问题  </p>
+<ul>
+<li>promise使用方法:  </li>
+</ul>
+<pre><code>get(data) {
+  return new Promise((resolve, reject)=&gt;{
+    if (data &gt; 5) {
+      resolve(data);
+    } else {
+      reject(&quot;数据都是不大于5&quot;);
+    }
+  });
+},
+
+testF(num) {
+  console.log(&quot;=====&quot;, num)
+},
+
+// 调用
+testBtn() {
+  this.get(6).then((num)=&gt;{
+    this.testF(num);
+  });
+   this.get(3).then((num)=&gt;{
+    this.testF(num);
+  });
+}</code></pre><ul>
+<li>async,会返回一个promise对象</li>
+</ul>
+<p>　　如果async函数中是return一个值，这个值就是Promise对象中resolve的值；</p>
+<p>　　如果async函数中是throw一个值，这个值就是Promise对象中reject的值。</p>
+<p>async的使用方法:  </p>
+<pre><code>async function imAsync(num) {
+  if (num &gt; 0) {
+    return num // 这里相当于resolve(num)
+  } else {
+    throw num // 这里相当于reject(num)
+  }
+}
+
+imAsync(1).then(function (v) {
+  console.log(v); // 1
+});
+
+// 注意这里是catch
+imAsync(0).catch(function (v) {
+  console.log(v); // 0
+})</code></pre><ul>
+<li>await不会单独使用,他会和async一起使用, 如果直接使用await的话会不起作用,</li>
+</ul>
+<p>await会暂停当前async函数的执行，等待后面的Promise的计算结果返回以后再继续执行当前的async函数</p>
+<p>使用场景:</p>
+<p>在发起请求获取数据的时候,如果个return返回数据, 这时就需要用到await   </p>
+<pre><code>const currentArr = []
+await this.$axios
+        .get(&quot;/topsellerCategorys/&quot;, {
+          marketplaceID: item.value,
+          listname: &quot;AnyDepartment&quot;
+        })
+        .then(response =&gt; {
+          if (response &amp;&amp; response.data) {
+                     currentArr  = response.data
+            );
+          }
+        })
+        .catch(error =&gt; {
+          this.loadingShow = false;
+          console.log(error);
+        });
+      if (this.fristCategory[0] &amp;&amp; this.fristCategory[0].length) {
+        this.selectArr = [this.fristCategory[0][0].label]; //类目默认赋值
+        this.category = this.fristCategory[0][0].label; //选择的类目命默认赋值
+      }
+return  currentArr     
+}</code></pre>
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/zfb.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -193,16 +295,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/04/webpack%E9%85%8D%E7%BD%AE%E6%89%93%E5%8C%85/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data= https://zhengjianxiao.github.io/2020/05/16/promise%E5%92%8Casync-await/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2020/05/14/Asp-Net-Core%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BF%E9%97%AE%E5%A4%B1%E8%B4%A5/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Asp-Net-Core数据库访问失败</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -217,486 +378,32 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-es6模块化导入和导出" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/03/es6%E6%A8%A1%E5%9D%97%E5%8C%96%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA/">es6模块化导入和导出</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/03/es6%E6%A8%A1%E5%9D%97%E5%8C%96%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA/" class="archive-article-date">
-  	<time datetime="2020-05-03T13:10:14.201Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: es6模块化导入和导出<br>date: 2020-05-03 21:10:14<br>tags: es6</p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/03/es6%E6%A8%A1%E5%9D%97%E5%8C%96%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/03/es6%E6%A8%A1%E5%9D%97%E5%8C%96%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#promise和async-await的区别"><span class="toc-number">1.</span> <span class="toc-text">promise和async await的区别</span></a></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
-  
-    <article id="post-vue父子组件通信" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/03/vue%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/">vue父子组件通信</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/03/vue%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/" class="archive-article-date">
-  	<time datetime="2020-05-03T07:58:04.611Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: vue父子组件通信<br>date: 2020-05-03 15:58:04<br>tags: Vue  </p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/03/vue%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/03/vue%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-es6块级作用域" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/03/es6%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F/">es6块级作用域</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/03/es6%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="archive-article-date">
-  	<time datetime="2020-05-03T03:29:26.182Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: es6块级作用域<br>date: 2020-05-03 11:29:26<br>tags: es6  </p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/03/es6%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/03/es6%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-vue-组件注册" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/02/vue-%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C/">vue-组件注册</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/02/vue-%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C/" class="archive-article-date">
-  	<time datetime="2020-05-02T12:23:40.722Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: vue 组件注册<br>date: 2020-05-02 20:23:40<br>tags: vue</p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/02/vue-%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/02/vue-%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-vue-input切换保留value的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/02/vue-input%E5%88%87%E6%8D%A2%E4%BF%9D%E7%95%99value%E7%9A%84%E9%97%AE%E9%A2%98/">vue-input切换保留value的问题</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/02/vue-input%E5%88%87%E6%8D%A2%E4%BF%9D%E7%95%99value%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-05-02T08:06:52.142Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: vue input切换保留value的问题<br>date: 2020-05-02 16:06:51<br>tags: vue</p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/02/vue-input%E5%88%87%E6%8D%A2%E4%BF%9D%E7%95%99value%E7%9A%84%E9%97%AE%E9%A2%98/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/02/vue-input%E5%88%87%E6%8D%A2%E4%BF%9D%E7%95%99value%E7%9A%84%E9%97%AE%E9%A2%98/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-初始Markdown" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/01/%E5%88%9D%E5%A7%8BMarkdown/">初始Markdown</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/01/%E5%88%9D%E5%A7%8BMarkdown/" class="archive-article-date">
-  	<time datetime="2020-05-01T13:02:06.409Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: 初始Markdown<br>date: 2020-05-01 21:02:06<br>tags:</p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/01/%E5%88%9D%E5%A7%8BMarkdown/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/01/%E5%88%9D%E5%A7%8BMarkdown/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-利用hexo和github打造个人博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/01/%E5%88%A9%E7%94%A8hexo%E5%92%8Cgithub%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">利用hexo和github打造个人博客</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/01/%E5%88%A9%E7%94%A8hexo%E5%92%8Cgithub%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
-  	<time datetime="2020-05-01T12:11:27.145Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: 利用hexo和github打造个人博客<br>date: 2020-05-01 20:11:27<br>tags:</p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/01/%E5%88%A9%E7%94%A8hexo%E5%92%8Cgithub%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/01/%E5%88%A9%E7%94%A8hexo%E5%92%8Cgithub%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -723,8 +430,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
