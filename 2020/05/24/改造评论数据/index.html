@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>My Blog</title>
+  <title>改造评论数据 | My Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="My Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="layout: wtitle: 改造评论数据date: 2020-05-24 20:46:27tags: javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="改造评论数据">
+<meta property="og:url" content="http://yoursite.com/2020/05/24/%E6%94%B9%E9%80%A0%E8%AF%84%E8%AE%BA%E6%95%B0%E6%8D%AE/index.html">
 <meta property="og:site_name" content="My Blog">
+<meta property="og:description" content="layout: wtitle: 改造评论数据date: 2020-05-24 20:46:27tags: javascript">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-24T12:46:27.155Z">
+<meta property="article:modified_time" content="2020-05-24T12:58:07.875Z">
 <meta property="article:author" content="Jian Xiao">
 <meta name="twitter:card" content="summary">
   
@@ -156,15 +160,14 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-    <article id="post-改造评论数据" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+<article id="post-改造评论数据" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/24/%E6%94%B9%E9%80%A0%E8%AF%84%E8%AE%BA%E6%95%B0%E6%8D%AE/">改造评论数据</a>
+    <h1 class="article-title" itemprop="name">
+      改造评论数据
     </h1>
   
 
@@ -180,11 +183,77 @@
         <hr>
 <p>layout: w<br>title: 改造评论数据<br>date: 2020-05-24 20:46:27<br>tags: javascript   </p>
 <hr>
-        
-          <a class="article-more-a" href="/2020/05/24/%E6%94%B9%E9%80%A0%E8%AF%84%E8%AE%BA%E6%95%B0%E6%8D%AE/#more">more >></a>
-        
+<a id="more"></a>  
+<h1 id="改造评论数据"><a href="#改造评论数据" class="headerlink" title="改造评论数据"></a>改造评论数据</h1><h2 id="数据展示"><a href="#数据展示" class="headerlink" title="数据展示"></a>数据展示</h2><p>我们收到后台服务器得到的评论数据包含一级评论、二级评论、三级评论等多层次的评论数据，这时如果不对数据进行处理，很难将数据展示在页面中，我们必须将二级评论放到一级评论中，将三级评论放在二级评论中以此类推  </p>
+<pre><code>const data = [
+    {comment_id: 1 , user_id: 41 , comment_content: &quot;what?&quot; , parent_id: null},
+    {comment_id: 2 , user_id: 07 , comment_content: &quot;that&quot; , parent_id: null},
+    {comment_id: 3 , user_id: 23 , comment_content: &quot;this&quot; , parent_id: &quot;1&quot;},
+    {comment_id: 4 , user_id: 54 , comment_content: &quot;title&quot; , parent_id: &quot;4&quot;},
+    {comment_id: 5 , user_id: 65 , comment_content: &quot;isa&quot; , parent_id: &quot;8&quot;},
+    {comment_id: 6 , user_id: 21 , comment_content: &quot;john&quot; , parent_id: &quot;3&quot;},
+    {comment_id: 7 , user_id: 06 , comment_content: &quot;kan&quot; , parent_id: &quot;6&quot;},
+    {comment_id: 8 , user_id: 13 , comment_content: &quot;mary&quot; , parent_id: &quot;5&quot;},
+    {comment_id: 9 , user_id: 18 , comment_content: &quot;users&quot; , parent_id: null}
+  ]</code></pre><h2 id="方法一，使用循环嵌套改造数据"><a href="#方法一，使用循环嵌套改造数据" class="headerlink" title="方法一，使用循环嵌套改造数据"></a>方法一，使用循环嵌套改造数据</h2><p>我们可以通过for循环，再嵌套for循环的方式将数据改造。</p>
+<pre><code>const res = []
+  for(s of data) {
+    if(s.parent_id == null) {
+      res.push(s)
+      for(i of data) {
+        if(i.parent_id == s.comment_id) {
+          s.child.push(i)
+          for(j of data) {
+            if(j.parent_id == i.comment_id) {
+              i.child.push(j)
+            }
+          }
+        }
+      }
+    }
+  }
+  console.log(res)</code></pre><p>虽然for循环可以完成，但是对于大的评论数据，得嵌套循环非常多，不太理想，这时，可以使用第二种方法。  </p>
+<h2 id="方法二利用递归改造数据"><a href="#方法二利用递归改造数据" class="headerlink" title="方法二利用递归改造数据"></a>方法二利用递归改造数据</h2><pre><code>function handle(tem) {
+    const result = []
+    for(s of data) {
+      if(s.parent_id == tem) {
+        result.push(s)
+        s.child = handle(s.comment_id)
+      }
+    }
+    return result
+  }
+  const res = handle(null)
+  console.log(res)</code></pre><p>通过递归，同样可以完成评论数据的改造，但是明显比嵌套for循环简单的多，代码更简洁，代码量更少。</p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/zfb.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -193,16 +262,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/24/%E6%94%B9%E9%80%A0%E8%AF%84%E8%AE%BA%E6%95%B0%E6%8D%AE/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data= https://zhengjianxiao.github.io/2020/05/24/%E6%94%B9%E9%80%A0%E8%AF%84%E8%AE%BA%E6%95%B0%E6%8D%AE/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2020/05/23/arcgis%E5%AE%89%E8%A3%85%E7%9A%84%E9%94%99%E8%AF%AF/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">arcgis安装的错误</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -217,620 +345,32 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-arcgis安装的错误" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/23/arcgis%E5%AE%89%E8%A3%85%E7%9A%84%E9%94%99%E8%AF%AF/">arcgis安装的错误</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/23/arcgis%E5%AE%89%E8%A3%85%E7%9A%84%E9%94%99%E8%AF%AF/" class="archive-article-date">
-  	<time datetime="2020-05-23T11:33:23.117Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: arcgis安装的错误<br>date: 2020-05-23 19:33:23<br>tags: arcgis</p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/23/arcgis%E5%AE%89%E8%A3%85%E7%9A%84%E9%94%99%E8%AF%AF/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/23/arcgis%E5%AE%89%E8%A3%85%E7%9A%84%E9%94%99%E8%AF%AF/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#改造评论数据"><span class="toc-number">1.</span> <span class="toc-text">改造评论数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据展示"><span class="toc-number">1.1.</span> <span class="toc-text">数据展示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法一，使用循环嵌套改造数据"><span class="toc-number">1.2.</span> <span class="toc-text">方法一，使用循环嵌套改造数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法二利用递归改造数据"><span class="toc-number">1.3.</span> <span class="toc-text">方法二利用递归改造数据</span></a></li></ol></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
-  
-    <article id="post-vue-cli4项目发布github遇到的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/20/vue-cli4%E9%A1%B9%E7%9B%AE%E5%8F%91%E5%B8%83github%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">vue-cli4项目发布github遇到的问题</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/20/vue-cli4%E9%A1%B9%E7%9B%AE%E5%8F%91%E5%B8%83github%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-05-20T07:21:32.317Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: vue cli4项目发布github遇到的问题<br>date: 2020-05-20 15:21:32<br>tags: vue  </p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/20/vue-cli4%E9%A1%B9%E7%9B%AE%E5%8F%91%E5%B8%83github%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/20/vue-cli4%E9%A1%B9%E7%9B%AE%E5%8F%91%E5%B8%83github%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-localstorage" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/19/localstorage/">localstorage</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/19/localstorage/" class="archive-article-date">
-  	<time datetime="2020-05-19T13:51:50.662Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: localstorage<br>date: 2020-05-19 21:51:50<br>tags: html5</p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/19/localstorage/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/19/localstorage/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-axios请求拦截" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/18/axios%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA/">axios请求拦截</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/18/axios%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA/" class="archive-article-date">
-  	<time datetime="2020-05-18T03:25:08.160Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: axios请求拦截<br>date: 2020-05-18 11:25:08<br>tags: axios</p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/18/axios%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/18/axios%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-android-状态保存和永久数据存储" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/17/android-%E7%8A%B6%E6%80%81%E4%BF%9D%E5%AD%98%E5%92%8C%E6%B0%B8%E4%B9%85%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/">android-状态保存和永久数据存储</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/17/android-%E7%8A%B6%E6%80%81%E4%BF%9D%E5%AD%98%E5%92%8C%E6%B0%B8%E4%B9%85%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/" class="archive-article-date">
-  	<time datetime="2020-05-17T05:53:45.701Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: android 状态保存和永久数据存储<br>date: 2020-05-17 13:53:45<br>tags: Android</p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/17/android-%E7%8A%B6%E6%80%81%E4%BF%9D%E5%AD%98%E5%92%8C%E6%B0%B8%E4%B9%85%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/17/android-%E7%8A%B6%E6%80%81%E4%BF%9D%E5%AD%98%E5%92%8C%E6%B0%B8%E4%B9%85%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-promise和async-await" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/16/promise%E5%92%8Casync-await/">promise和async-await</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/16/promise%E5%92%8Casync-await/" class="archive-article-date">
-  	<time datetime="2020-05-16T03:30:12.606Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: promise和async await<br>date: 2020-05-16 11:30:12<br>tags: es6  </p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/16/promise%E5%92%8Casync-await/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/16/promise%E5%92%8Casync-await/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Asp-Net-Core数据库访问失败" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/14/Asp-Net-Core%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BF%E9%97%AE%E5%A4%B1%E8%B4%A5/">Asp-Net-Core数据库访问失败</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/14/Asp-Net-Core%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BF%E9%97%AE%E5%A4%B1%E8%B4%A5/" class="archive-article-date">
-  	<time datetime="2020-05-14T13:14:34.125Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: Asp.Net Core数据库访问失败<br>date: 2020-05-14 21:14:34<br>tags: Asp.Net Core  </p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/14/Asp-Net-Core%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BF%E9%97%AE%E5%A4%B1%E8%B4%A5/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/14/Asp-Net-Core%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BF%E9%97%AE%E5%A4%B1%E8%B4%A5/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-axios封装" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/13/axios%E5%B0%81%E8%A3%85/">axios封装</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/13/axios%E5%B0%81%E8%A3%85/" class="archive-article-date">
-  	<time datetime="2020-05-13T05:25:44.504Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: axios封装<br>date: 2020-05-13 13:25:44<br>tags: axios</p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/13/axios%E5%B0%81%E8%A3%85/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/13/axios%E5%B0%81%E8%A3%85/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-axios实例" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/13/axios%E5%AE%9E%E4%BE%8B/">axios实例</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/13/axios%E5%AE%9E%E4%BE%8B/" class="archive-article-date">
-  	<time datetime="2020-05-13T03:55:31.437Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: axios实例<br>date: 2020-05-13 11:55:31<br>tags: axios</p>
-<hr>
-        
-          <a class="article-more-a" href="/2020/05/13/axios%E5%AE%9E%E4%BE%8B/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/13/axios%E5%AE%9E%E4%BE%8B/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -857,8 +397,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
